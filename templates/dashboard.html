@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - VEMU Fee Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --gradient-text: linear-gradient(120deg, #4f46e5, #10b981);
+            --gradient-button: linear-gradient(135deg, #4f46e5 0%, #818cf8 100%);
+            --text-light: #ffffff;
+            --text-dark: #1e293b;
+            --shadow-neon: 0 0 15px rgba(79, 70, 229, 0.3);
+            --dark: #1e1b4b;
+            --light: #f5f3ff;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--light);
+            color: var(--text-dark);
+            padding: 2rem;
+        }
+
+        .header {
+            background: var(--gradient-button);
+            color: var(--text-light);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .dashboard-content {
+            background: var(--white);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-message h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--text-light);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: var(--accent);
+            color: var(--text-light);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <button class="logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+
+    <div class="header">
+        <h1><i class="fas fa-university"></i> VEMU Fee Management</h1>
+        <p>Employee Dashboard - Manage student fees and transactions</p>
+    </div>
+
+    <div class="dashboard-content">
+        <div class="welcome-message">
+            <h2>Welcome to the Employee Dashboard</h2>
+            <p>Use the features below to manage student fee transactions and records.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-users"></i>
+                <h3>Manage Students</h3>
+                <p>Add, update, and view student information</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-credit-card"></i>
+                <h3>Transaction Verification</h3>
+                <p>Verify and process student fee payments</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-chart-bar"></i>
+                <h3>Reports & Analytics</h3>
+                <p>Generate reports and view payment statistics</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-comments"></i>
+                <h3>Handle Complaints</h3>
+                <p>Review and respond to student complaints</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                fetch('/api/logout')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.href = '/';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Logout error:', error);
+                        window.location.href = '/';
+                    });
+            }
+        }
+
+        // Check if user is authenticated on page load
+        fetch('/api/employee/session')
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    window.location.href = '/employlogin';
+                }
+            })
+            .catch(error => {
+                console.error('Session check error:', error);
+                window.location.href = '/employlogin';
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+Flask==2.3.3
+Flask-SQLAlchemy==3.0.5
+Flask-Migrate==4.0.5
+Flask-CORS==4.0.0
+Werkzeug==2.3.7
+requests==2.31.0
+python-dotenv==1.0.0
+gunicorn==21.2.0
+# PostgreSQL Database Driver (Compatible with Python 3.11)
+psycopg2-binary==2.9.7
+# Additional drivers (optional)
+PyMySQL==1.1.0
+cryptography==41.0.4
+cryptography
+flask
+flask-cors
+flask-migrate
+flask-sqlalchemy
+gunicorn
+psycopg2-binary
+pymysql
+python-dotenv
+requests
+werkzeug
